@@ -73,6 +73,7 @@ esbuild
     minify: !isDevBuild,
     sourcemap: isDevBuild ? "inline" : true,
     plugins,
+    external: ["keytar"],
     inject: ["./require-shim.js"],
   })
   .catch(() => process.exit(1));

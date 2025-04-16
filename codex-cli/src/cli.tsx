@@ -13,7 +13,9 @@ import { initLogger } from "./utils/agent/log";
 import { ReviewDecision } from "./utils/agent/review";
 import { AutoApprovalMode } from "./utils/auto-approval-mode";
 import { loadConfig, PRETTY_PRINT } from "./utils/config";
+import { setApiKey as setConfigApiKey } from "./utils/config.js";
 import { createInputItem } from "./utils/input-utils";
+import { getApiKey as getStoredApiKey } from "./utils/key-manager.js";
 import {
   isModelSupportedForResponses,
   preloadModels,
@@ -139,7 +141,8 @@ if (cli.flags.help) {
 // API key handling
 // ---------------------------------------------------------------------------
 
-const apiKey = process.env["OPENAI_API_KEY"];
+const apiKey = await getStoredApiKey();
+setConfigApiKey(apiKey);
 
 if (!apiKey) {
   // eslint-disable-next-line no-console
